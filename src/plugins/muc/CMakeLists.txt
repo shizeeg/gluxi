@@ -3,6 +3,7 @@
 set (plugin_HDR_MOC
 	mucplugin.h
 	nickasyncrequest.h
+	cleanasyncrequest.h
 )
 
 set (plugin_HDR
@@ -33,6 +34,7 @@ set (plugin_SRC
 	nicklist.cpp
 	config/mucconfigurator.cpp
 	nickasyncrequest.cpp
+	cleanasyncrequest.cpp
 )
 
 GLUXI_PLUGIN()
