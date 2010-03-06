@@ -12,6 +12,7 @@
 
 #include "currencyrequest.h"
 #include "translaterequest.h"
+#include "weatherrequest.h"
 
 #include <QtDebug>
 #include <QRegExp>
@@ -20,7 +21,8 @@ NetPlugin::NetPlugin(GluxiBot *parent)
 		: BasePlugin(parent)
 {
 	commands << "PING" << "TRACEROUTE" << "WWW" << "POST" << "XEP" << "GOOGLE" << "SVN" << "HEADERS"
-		 << "CURRENCY" << "TRANSLATE";
+		 << "CURRENCY" << "TRANSLATE"
+		 << "WEATHER";
 }
 
 
@@ -125,6 +127,14 @@ bool NetPlugin::parseMessage(gloox::Stanza* s, const QStringList& flags)
 		req->exec();
 		return true;
 	}
+	if (cmd=="WEATHER")
+	{
+		WeatherRequest *req = new WeatherRequest(this, new gloox::Stanza(s), parser);
+		bot()->asyncRequests()->append(qobject_cast<AsyncRequest*>(req));
+		req->exec();
+		return true;
+	}
+
 	return false;
 }
 
