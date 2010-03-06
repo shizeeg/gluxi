@@ -12,6 +12,7 @@
 
 #include "currencyrequest.h"
 #include "translaterequest.h"
+#include "rssrequest.h"
 
 #include <QtDebug>
 #include <QRegExp>
@@ -20,7 +21,8 @@ NetPlugin::NetPlugin(GluxiBot *parent)
 		: BasePlugin(parent)
 {
 	commands << "PING" << "TRACEROUTE" << "WWW" << "POST" << "XEP" << "GOOGLE" << "SVN" << "HEADERS"
-		 << "CURRENCY" << "TRANSLATE";
+		 << "CURRENCY" << "TRANSLATE"
+		 << "RSS";
 }
 
 
@@ -125,6 +127,14 @@ bool NetPlugin::parseMessage(gloox::Stanza* s, const QStringList& flags)
 		req->exec();
 		return true;
 	}
+	if (cmd=="RSS")
+	{
+		RssRequest *req = new RssRequest(this, new gloox::Stanza(s), parser);
+		bot()->asyncRequests()->append(qobject_cast<AsyncRequest*>(req));
+		req->exec();
+		return true;
+	}
+
 	return false;
 }
 
